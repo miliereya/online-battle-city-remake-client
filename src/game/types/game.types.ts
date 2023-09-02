@@ -27,7 +27,7 @@ export type IPlayerNum = 1 | 2
 
 export interface IPlayer {
 	id: string
-	isAlive: boolean
+	deathCooldown: number
 	lives: number
 	coordinateX: number
 	coordinateY: number

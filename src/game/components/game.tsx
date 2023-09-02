@@ -56,7 +56,7 @@ export const Game = () => {
 		}
 	}
 	const pauseHandler = (e: KeyboardEvent) => {
-		if (game && e.key === 'Pause') {
+		if (game && e.code === 'Space') {
 			lobbyActions.input('PAUSE', game.id)
 		}
 	}
@@ -82,12 +82,12 @@ export const Game = () => {
 		document.addEventListener('keypress', moveHandler)
 		document.addEventListener('keyup', clearMovement)
 		document.addEventListener('keyup', fireHandler)
-		document.addEventListener('keydown', pauseHandler)
+		document.addEventListener('keypress', pauseHandler)
 		return () => {
 			document.removeEventListener('keypress', moveHandler)
 			document.removeEventListener('keyup', fireHandler)
 			document.removeEventListener('keyup', clearMovement)
-			document.removeEventListener('keydown', pauseHandler)
+			document.removeEventListener('keypress', pauseHandler)
 		}
 	}, [game])
 

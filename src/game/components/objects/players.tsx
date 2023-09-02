@@ -10,8 +10,8 @@ export const Players = (props: PlayersProps) => {
 	const { p1, p2 } = props
 	return (
 		<>
-			{p1.isAlive && <Player pNum={1} p={p1} />}
-			{p2.isAlive && <Player pNum={2} p={p2} />}
+			{p1.deathCooldown === 0 && p1.lives > 0 && <Player pNum={1} p={p1} />}
+			{p2.deathCooldown === 0 && p2.lives > 0 && <Player pNum={2} p={p2} />}
 		</>
 	)
 }
