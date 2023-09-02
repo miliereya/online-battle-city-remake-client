@@ -82,7 +82,7 @@ export const Game = () => {
 		document.addEventListener('keypress', moveHandler)
 		document.addEventListener('keyup', clearMovement)
 		document.addEventListener('keyup', fireHandler)
-		document.addEventListener('keydown', pauseHandler)
+		document.addEventListener('keypress', pauseHandler)
 		return () => {
 			document.removeEventListener('keypress', moveHandler)
 			document.removeEventListener('keyup', fireHandler)
