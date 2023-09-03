@@ -8,18 +8,15 @@ export const useFrameLoop = (
 
 	useEffect(() => {
 		const loop = (time: number) => {
-			if (previousTime.current !== undefined) {
-				const deltaTime = time - previousTime.current
+			const deltaTime = time - previousTime.current
+			if (deltaTime > 22) {
 				callback(time, deltaTime)
+				previousTime.current = time
 			}
-
-			previousTime.current = time
 			rafId.current = requestAnimationFrame(loop)
 		}
 
 		rafId.current = requestAnimationFrame(loop)
-
-		console.log('changed raflOOp')
 
 		return () => cancelAnimationFrame(rafId.current)
 	}, [callback])

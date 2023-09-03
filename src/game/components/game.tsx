@@ -14,19 +14,12 @@ export const Game = () => {
 	const [game, setGame] = useState<IGame>()
 	const block = 64
 	const [movement, setMovement] = useState<TypeMoveButton | null>(null)
-	const previousTime = useRef(0)
 
-	const callbackForGameLoop = useCallback(
-		(time: number, deltaTime: number) => {
-			if (!movement || !game?.id) return
-			if (time - previousTime.current > 16) {
-				// how frequently we should input new values to sockets  (возможно нужно еще какой-то транзишен добавить, 16 это дефолт, слишком быстро, но с 30 мне кажется что недостаточно плавно)
-				lobbyActions.input(movement, game.id)
-				previousTime.current = time
-			}
-		},
-		[game?.id, movement]
-	)
+	const callbackForGameLoop = useCallback(() => {
+		if (!movement || !game?.id) return
+		// how frequently we should input new values to sockets  (возможно нужно еще какой-то транзишен добавить, 16 это дефолт, слишком быстро, но с 30 мне кажется что недостаточно плавно)
+		lobbyActions.input(movement, game.id)
+	}, [game?.id, movement])
 
 	useFrameLoop(callbackForGameLoop)
 
