@@ -24,3 +24,4 @@ const RenderObject = memo(({ row, i }: RenderObjectProps) => {
 
 RenderObject.displayName = 'name'
 export default RenderObject
+

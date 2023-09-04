@@ -1,16 +1,15 @@
-import { IPlayer } from '@/game/types/game.types'
-import { getDirectionDegrees } from '@/game/utils/style.utils'
-import { tank_p1__lvl_0 } from '@/game/render/p1/tank-lvl_0'
-import RenderObject from '../render'
 import { tank_heavy } from '@/game/render/heavy/tank-heavy'
+import { ITank } from '@/game/types/game.types'
+import { getDirectionDegrees } from '@/game/utils/style.utils'
+import { FC } from 'react'
+import RenderObject from '../render'
 
-interface PlayerProps {
-	p: IPlayer
+interface TankHeavyProps {
+	tank: ITank
 }
 
-export const Player1 = (props: PlayerProps) => {
-	const { coordinateX, coordinateY, direction, tick } = props.p
-
+export const TankHeavy: FC<TankHeavyProps> = ({ tank }) => {
+	const { coordinateX, coordinateY, direction, tick } = tank
 	return (
 		<>
 			<div
@@ -23,7 +22,7 @@ export const Player1 = (props: PlayerProps) => {
 				}}
 			>
 				{tank_heavy.t1.map((row, i) => (
-					<RenderObject key={'1' + i} i={i} row={row} />
+					<RenderObject key={'1' + i} row={row} i={i} />
 				))}
 			</div>
 			<div
@@ -32,12 +31,12 @@ export const Player1 = (props: PlayerProps) => {
 					left: `${(coordinateX - 7) * 4}px`,
 					bottom: `${(coordinateY - 7) * 4}px`,
 					position: 'absolute',
-					zIndex: tick === 2 ? 2 : 1,
+					zIndex: tick === 2 ? 1 : 2,
 				}}
 			>
-				{tank_heavy.t2.map((row, i) => {
-					return <RenderObject key={'2' + i} i={i} row={row} />
-				})}
+				{tank_heavy.t2.map((row, i) => (
+					<RenderObject key={'2' + i} row={row} i={i} />
+				))}
 			</div>
 		</>
 	)
