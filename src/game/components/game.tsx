@@ -5,10 +5,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import s from './game.module.scss'
 import { Objects } from './objects/objects'
 import { IGame, TypeButton, TypeMoveButton } from '../types/game.types'
-import { Players } from './objects/players'
+import { Players } from './players/players'
 import { Lobby } from './lobby'
-import { Bullets } from './objects/bullets'
+import { Bullets } from './bullets'
 import { useFrameLoop } from '@/hooks/useFrameLoop'
+import { Enemies } from './enemies/enemies'
 
 export const Game = () => {
 	const [game, setGame] = useState<IGame>()
@@ -74,11 +75,11 @@ export const Game = () => {
 		}
 		document.addEventListener('keypress', moveHandler)
 		document.addEventListener('keyup', clearMovement)
-		document.addEventListener('keyup', fireHandler)
+		document.addEventListener('keypress', fireHandler)
 		document.addEventListener('keypress', pauseHandler)
 		return () => {
 			document.removeEventListener('keypress', moveHandler)
-			document.removeEventListener('keyup', fireHandler)
+			document.removeEventListener('keypress', fireHandler)
 			document.removeEventListener('keyup', clearMovement)
 			document.removeEventListener('keypress', pauseHandler)
 		}
@@ -97,6 +98,7 @@ export const Game = () => {
 			<Players p1={game.p1} p2={game.p2} />
 			<Objects objects={game.objects} />
 			<Bullets bullets={game.bullets} />
+			<Enemies enemies={game.enemies}/>
 		</div>
 	)
 }

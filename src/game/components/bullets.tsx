@@ -1,7 +1,7 @@
 import { IBullet } from '@/game/types/game.types'
-import { RenderObject } from './object'
 import { getDirectionDegrees } from '@/game/utils/style.utils'
 import { render_bullet } from '@/game/render/bullet'
+import RenderObject from './render'
 
 interface BulletsProps {
 	bullets: IBullet[]
@@ -20,10 +20,11 @@ export const Bullets = (props: BulletsProps) => {
 							left: `${(coordinateX - 1.5) * 4}px`,
 							bottom: `${(coordinateY - 1) * 4}px`,
 							position: 'absolute',
+							zIndex: 3
 						}}
 					>
 						{render_bullet.map((row, i) => (
-							<RenderObject key={id + i + new Date()} i={i} row={row} />
+							<RenderObject key={id + i} i={i} row={row} />
 						))}
 					</div>
 				)

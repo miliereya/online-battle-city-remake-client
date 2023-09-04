@@ -11,17 +11,20 @@ export interface InputDto {
 
 export type TypeGameObjet = 'STONE' | 'BRICK' | 'WATER' | 'TREES' | 'ICE'
 
-export interface GameObject {
+export interface GameObject extends Coordinates {
 	id: string
 	type: TypeGameObjet
-	coordinateX: number
-	coordinateY: number
 }
 
 export interface Coordinates {
 	coordinateX: number
 	coordinateY: number
 }
+
+export type TypeEnemyTank = 'NORMAL' | 'SPEEDY' | 'HEAVY'
+export type TypePlayerTank = 'LVL_0' | 'LVL_1' | 'LVL_2' | 'LVL_3'
+
+export type TypeTank = TypeEnemyTank | TypePlayerTank
 
 export type IPlayerNum = 1 | 2
 
@@ -33,6 +36,19 @@ export interface IPlayer {
 	coordinateY: number
 	direction: TypeMoveButton
 	tick: 1 | 2
+}
+
+export type TypeBonus = 'GRENADE' | 'HELMET' | 'SHOVEL' | 'STAR' | 'HP'
+
+export interface ITank extends Coordinates {
+	id: string
+	direction: TypeMoveButton
+	tick: 1 | 2
+	type: TypeTank
+	speed: 1 | 2
+	cooldown: number
+	lives: 0 | 1 | 2 | 3
+	bonus?: TypeBonus
 }
 
 type TypeShooter = 'player' | 'enemy'
@@ -51,4 +67,5 @@ export interface IGame {
 	p2: IPlayer
 	isPaused: boolean
 	bullets: IBullet[]
+	enemies: ITank[]
 }
