@@ -1,9 +1,9 @@
-const bl = '#183767'
-const gr = '#d2d2d2'
-const wh = '#ececec'
+const bl = '#5a007b'
+const gr = '#b53121'
+const wh = '#ffffff'
 const no = ''
 
-export const tank_speedy = {
+export const tank_speedy_bonus = {
 	t1: [
 		[no, no, no, no, no, no, no, no, no, no, no, no, no, no, no],
 		[wh, wh, bl, bl, no, wh, wh, bl, bl, no, wh, wh, bl, bl, no],

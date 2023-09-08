@@ -1,10 +1,10 @@
 const ds = '#3c3c3c'
-const bl = '#183767'
-const gr = '#d2d2d2'
-const wh = '#ececec'
+const bl = '#5a007b'
+const gr = '#b53121'
+const wh = '#ffffff'
 const no = ''
 
-export const tank_normal = {
+export const tank_normal_bonus = {
 	t1: [
 		[ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, no],
 		[ds, wh, bl, wh, bl, wh, bl, wh, bl, wh, bl, wh, bl, ds, no],

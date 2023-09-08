@@ -1,4 +1,4 @@
-import { IGame, IPlayer } from '@/game/types/game.types'
+import { IPlayer } from '@/game/types/game.types'
 import { Player1 } from './p1'
 import { Player2 } from './p2'
 

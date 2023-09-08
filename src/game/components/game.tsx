@@ -10,6 +10,9 @@ import { Lobby } from './lobby'
 import { Bullets } from './bullets'
 import { useFrameLoop } from '@/hooks/useFrameLoop'
 import { Enemies } from './enemies/enemies'
+import { Bonuses } from './bonuses/bonuses'
+import { Flag } from './objects/flag'
+import { Bangs } from './animations/bangs'
 
 export const Game = () => {
 	const [game, setGame] = useState<IGame>()
@@ -98,7 +101,10 @@ export const Game = () => {
 			<Players p1={game.p1} p2={game.p2} />
 			<Objects objects={game.objects} />
 			<Bullets bullets={game.bullets} />
-			<Enemies enemies={game.enemies}/>
+			<Enemies enemies={game.enemies} />
+			<Bonuses bonuses={game.bonuses} />
+			<Bangs bangs={game.bangs}/>
+			<Flag isAlive={game.isFlagAlive} />
 		</div>
 	)
 }

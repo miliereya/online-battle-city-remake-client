@@ -3,6 +3,7 @@ import { Stone } from './stone'
 import { Brick } from './brick'
 import { Water } from './water'
 import { Trees } from './trees'
+import { Ice } from './ice'
 
 interface ObjectProps {
 	objects: GameObject[]
@@ -21,6 +22,8 @@ export const Objects = (props: ObjectProps) => {
 						return <Water key={obj.id} water={obj} />
 					case 'TREES':
 						return <Trees key={obj.id} trees={obj} />
+					case 'ICE':
+						return <Ice key={obj.id} ice={obj} />
 				}
 			})}
 		</>

@@ -28,17 +28,27 @@ export type TypeTank = TypeEnemyTank | TypePlayerTank
 
 export type IPlayerNum = 1 | 2
 
-export interface IPlayer {
+export interface IBonus extends Coordinates {
 	id: string
-	deathCooldown: number
-	lives: number
-	coordinateX: number
-	coordinateY: number
-	direction: TypeMoveButton
-	tick: 1 | 2
+	type: TypeBonus
+	lifeTime: number
+	picker: string | null
 }
 
-export type TypeBonus = 'GRENADE' | 'HELMET' | 'SHOVEL' | 'STAR' | 'HP'
+export interface IPlayer extends Coordinates {
+	id: string
+	type: TypePlayerTank
+	deathCooldown: number
+	lives: 0 | 1 | 2 | 3
+	speed: 1 | 2
+	cooldown: number
+	direction: TypeMoveButton
+	tick: 1 | 2
+	spawnAnimation: number
+	helmet: number
+}
+
+export type TypeBonus = 'GRENADE' | 'HELMET' | 'STAR' | 'HP' | 'TIMER'
 
 export interface ITank extends Coordinates {
 	id: string
@@ -48,16 +58,25 @@ export interface ITank extends Coordinates {
 	speed: 1 | 2
 	cooldown: number
 	lives: 0 | 1 | 2 | 3
+	spawnAnimation: number
 	bonus?: TypeBonus
 }
 
 type TypeShooter = 'player' | 'enemy'
+
+type TypeBang = 'BIG' | 'SMALL'
 
 export interface IBullet extends Coordinates {
 	direction: TypeMoveButton
 	id: string
 	shooter: TypeShooter
 	level: 1 | 2
+}
+
+export interface IBang extends Coordinates {
+	id: string
+	type: TypeBang
+	timer: number
 }
 
 export interface IGame {
@@ -68,4 +87,7 @@ export interface IGame {
 	isPaused: boolean
 	bullets: IBullet[]
 	enemies: ITank[]
+	bonuses: IBonus[]
+	bangs: IBang[]
+	isFlagAlive: boolean
 }

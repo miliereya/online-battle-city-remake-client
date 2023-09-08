@@ -1,10 +1,9 @@
-const ds = '#3c3c3c'
 const bl = '#183767'
 const gr = '#d2d2d2'
 const wh = '#ececec'
 const no = ''
 
-export const tank_heavy = {
+export const tank_heavy = (bl: string, gr: string, wh: string) => ({
 	t1: [
 		[no, no, no, no, no, no, no, no, no, no, no, no, no, no, no],
 		[wh, bl, wh, bl, wh, bl, wh, bl, wh, bl, wh, bl, wh, bl, wh],
@@ -39,4 +38,4 @@ export const tank_heavy = {
 		[bl, gr, bl, gr, bl, gr, bl, gr, bl, gr, bl, gr, bl, gr, bl],
 		[no, no, no, no, no, no, no, no, no, no, no, no, no, no, no],
 	],
-}
+})
