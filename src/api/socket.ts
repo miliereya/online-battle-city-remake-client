@@ -4,7 +4,9 @@ import { ILobby } from '@/game/types/lobby.types'
 import { Dispatch, SetStateAction } from 'react'
 import { IGame } from '@/game/types/game.types'
 
-export const socket = io('http://localhost:5000', {
+const server = process.env.NEXT_PUBLIC_SERVER
+
+export const socket = io(server ?? '', {
 	withCredentials: true,
 })
 

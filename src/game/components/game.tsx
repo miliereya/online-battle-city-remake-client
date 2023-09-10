@@ -91,6 +91,7 @@ export const Game = () => {
 			document.removeEventListener('keyup', clearMovement)
 			document.removeEventListener('keypress', pauseHandler)
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [game?.id])
 
 	useAudio(game?.sounds)
