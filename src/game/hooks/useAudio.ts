@@ -1,3 +1,5 @@
+'use client'
+
 import { getKeys } from '../utils/object.utils'
 
 export const useAudio = <T>(sounds: T) => {

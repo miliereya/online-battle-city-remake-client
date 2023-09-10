@@ -1,4 +1,6 @@
+'use client'
 import { useEffect, useMemo, useState } from 'react'
+
 
 const playerMoveSound = new Audio(`/player_move.ogg`)
 
