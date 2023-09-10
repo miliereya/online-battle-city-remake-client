@@ -1,5 +1,3 @@
-'use client'
-
 import { lobbyActions } from '@/api/socket'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import s from './game.module.scss'
