@@ -79,6 +79,24 @@ export interface IBang extends Coordinates {
 	timer: number
 }
 
+interface EnemyList {
+	type: TypeEnemyTank
+	bonus?: TypeBonus
+}
+export interface GameSounds {
+	heavy_hit: boolean
+	pause: boolean
+	level_start: boolean
+	bang: boolean
+	flag_bang: boolean
+	game_over: boolean
+	shoot: boolean
+	hit_1: boolean
+	bonus_spawn: boolean
+	bonus_pickup: boolean
+	player_move: boolean
+}
+
 export interface IGame {
 	id: string
 	objects: GameObject[]
@@ -87,7 +105,12 @@ export interface IGame {
 	isPaused: boolean
 	bullets: IBullet[]
 	enemies: ITank[]
+	enemyList: EnemyList[]
 	bonuses: IBonus[]
 	bangs: IBang[]
 	isFlagAlive: boolean
+	levelChangeAnimation: number
+	level: number
+	gameOverAnimation: number
+	sounds: GameSounds
 }

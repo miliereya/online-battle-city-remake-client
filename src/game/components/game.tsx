@@ -13,6 +13,11 @@ import { Enemies } from './enemies/enemies'
 import { Bonuses } from './bonuses/bonuses'
 import { Flag } from './objects/flag'
 import { Bangs } from './animations/bangs'
+import { LevelChangeAnimation } from './animations/level-change'
+import { GameOverAnimation } from './animations/game-over'
+import { Sidebar } from './sidebar'
+import { useAudio } from '../hooks/useAudio'
+import { useMoveAudio } from '../hooks/useMoveAudio'
 
 export const Game = () => {
 	const [game, setGame] = useState<IGame>()
@@ -88,6 +93,9 @@ export const Game = () => {
 		}
 	}, [game?.id])
 
+	useAudio(game?.sounds)
+	useMoveAudio(game?.sounds.player_move)
+
 	return !game ? (
 		<Lobby setGame={setGame} />
 	) : (
@@ -98,13 +106,16 @@ export const Game = () => {
 				height: `${block * 13}px`,
 			}}
 		>
+			{game.levelChangeAnimation && <LevelChangeAnimation level={game.level} />}
+			{game.gameOverAnimation && <GameOverAnimation />}
 			<Players p1={game.p1} p2={game.p2} />
 			<Objects objects={game.objects} />
 			<Bullets bullets={game.bullets} />
 			<Enemies enemies={game.enemies} />
 			<Bonuses bonuses={game.bonuses} />
-			<Bangs bangs={game.bangs}/>
+			<Bangs bangs={game.bangs} />
 			<Flag isAlive={game.isFlagAlive} />
+			<Sidebar game={game} />
 		</div>
 	)
 }
