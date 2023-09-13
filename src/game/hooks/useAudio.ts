@@ -8,7 +8,11 @@ export const useAudio = <T>(sounds: T) => {
 
 	for (let i = 0; i < titles.length; i++) {
 		if (sounds[titles[i]]) {
-			if (titles[i] !== 'player_move' && typeof Audio !== undefined)
+			if (
+				titles[i] !== 'player_move' &&
+				titles[i] !== 'enemy_move' &&
+				typeof Audio !== undefined
+			)
 				new Audio(`/${String(titles[i])}.ogg`).play()
 		}
 	}

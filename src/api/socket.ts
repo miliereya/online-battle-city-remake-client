@@ -16,9 +16,11 @@ export const lobbyActions = {
 		setLobby: any,
 		setGame: Dispatch<SetStateAction<IGame | undefined>>
 	) {
-		socket.on(GameActions.frame, (game) => setGame(game))
+		socket.on(GameActions.frame, ({ game, ping }) => {
+			// console.log(new Date().getTime() - ping)
+			setGame(game)
+		})
 		socket.emit(LobbyActions.create, { name }, (res: ILobby) => {
-			console.log(res)
 			setLobby(res)
 		})
 	},
@@ -32,7 +34,10 @@ export const lobbyActions = {
 
 	joinLobby(id: string, setGame: Dispatch<SetStateAction<IGame | undefined>>) {
 		socket.emit(LobbyActions.join, id)
-		socket.on(GameActions.frame, (game) => setGame(game))
+		socket.on(GameActions.frame, ({ game, ping }) => {
+			setGame(game)
+			// console.log(new Date().getTime() - ping)
+		})
 	},
 
 	input(button: string, gameId: string) {

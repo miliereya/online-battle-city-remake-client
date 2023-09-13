@@ -93,7 +93,7 @@ export const Game = () => {
 	}, [game?.id])
 
 	useAudio(game?.sounds)
-	useMoveAudio(game?.sounds.player_move)
+	useMoveAudio(game?.sounds.player_move, game?.sounds.enemy_move)
 
 	return !game ? (
 		<Lobby setGame={setGame} />

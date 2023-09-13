@@ -95,6 +95,7 @@ export interface GameSounds {
 	bonus_spawn: boolean
 	bonus_pickup: boolean
 	player_move: boolean
+	enemy_move: boolean
 }
 
 export interface IGame {
