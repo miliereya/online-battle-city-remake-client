@@ -2,7 +2,7 @@ import { io } from 'socket.io-client'
 import { GameActions, LobbyActions } from './socket.types'
 import { ILobby } from '@/game/types/lobby.types'
 import { Dispatch, SetStateAction } from 'react'
-import { IGame } from '@/game/types/game.types'
+import { CreateGameObject, IGame } from '@/game/types/game.types'
 
 const server = process.env.NEXT_PUBLIC_SERVER
 
@@ -14,13 +14,14 @@ export const lobbyActions = {
 	create(
 		name: string,
 		setLobby: any,
-		setGame: Dispatch<SetStateAction<IGame | undefined>>
+		setGame: Dispatch<SetStateAction<IGame | undefined>>,
+		editor?: CreateGameObject[]
 	) {
 		socket.on(GameActions.frame, ({ game, ping }) => {
 			// console.log(new Date().getTime() - ping)
 			setGame(game)
 		})
-		socket.emit(LobbyActions.create, { name }, (res: ILobby) => {
+		socket.emit(LobbyActions.create, { name, editor }, (res: ILobby) => {
 			setLobby(res)
 		})
 	},

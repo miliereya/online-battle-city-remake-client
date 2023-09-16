@@ -1,19 +1,25 @@
 import { Dispatch, useState, SetStateAction } from 'react'
 import { ILobby } from '../types/lobby.types'
 import { lobbyActions } from '@/api/socket'
-import { IGame } from '../types/game.types'
+import { CreateGameObject, IGame } from '../types/game.types'
 
 interface LobbyProps {
 	setGame: Dispatch<SetStateAction<IGame | undefined>>
+	objects: CreateGameObject[]
 }
 
-export const Lobby = ({ setGame }: LobbyProps) => {
+export const Lobby = ({ setGame, objects }: LobbyProps) => {
 	const [lobby, setLobby] = useState<ILobby>()
 	const [lobbies, setLobbies] = useState<ILobby[]>([])
 	const [name, setName] = useState<string>('')
 
 	const createLobbyHandler = () => {
-		lobbyActions.create(name, setLobby, setGame)
+		lobbyActions.create(
+			name,
+			setLobby,
+			setGame,
+			objects.length ? objects : undefined
+		)
 	}
 
 	const findLobbiesHandler = () => {

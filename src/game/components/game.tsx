@@ -2,7 +2,12 @@ import { lobbyActions } from '@/api/socket'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import s from './game.module.scss'
 import { Objects } from './objects/objects'
-import { IGame, TypeButton, TypeMoveButton } from '../types/game.types'
+import {
+	CreateGameObject,
+	IGame,
+	TypeButton,
+	TypeMoveButton,
+} from '../types/game.types'
 import { Players } from './players/players'
 import { Lobby } from './lobby'
 import { Bullets } from './bullets'
@@ -16,11 +21,13 @@ import { GameOverAnimation } from './animations/game-over'
 import { Sidebar } from './sidebar'
 import { useAudio } from '../hooks/useAudio'
 import { useMoveAudio } from '../hooks/useMoveAudio'
+import { Editor } from './editor'
 
 export const Game = () => {
 	const [game, setGame] = useState<IGame>()
 	const block = 64
 	const [movement, setMovement] = useState<TypeMoveButton | null>(null)
+	const [objects, setObjects] = useState<CreateGameObject[]>([])
 
 	const callbackForGameLoop = useCallback(() => {
 		if (!movement || !game?.id) return
@@ -89,14 +96,17 @@ export const Game = () => {
 			document.removeEventListener('keyup', clearMovement)
 			document.removeEventListener('keypress', pauseHandler)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [game?.id])
 
 	useAudio(game?.sounds)
 	useMoveAudio(game?.sounds.player_move, game?.sounds.enemy_move)
 
 	return !game ? (
-		<Lobby setGame={setGame} />
+		<>
+			<Lobby setGame={setGame} objects={objects}/>
+			<Editor objects={objects} setObjects={setObjects} />
+		</>
 	) : (
 		<div
 			className={s.screen}

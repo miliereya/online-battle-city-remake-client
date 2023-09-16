@@ -98,6 +98,11 @@ export interface GameSounds {
 	enemy_move: boolean
 }
 
+export interface CreateGameObject extends Coordinates {
+	type: TypeGameObjet
+	id: string
+}
+
 export interface IGame {
 	id: string
 	objects: GameObject[]
