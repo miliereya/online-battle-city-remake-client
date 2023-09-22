@@ -1,6 +1,6 @@
 export enum LobbyActions {
 	create = 'lobby/create',
-	find = 'lobby/find',
+	ping = 'lobby/ping',
 	join = 'lobby/join',
 	delete = 'lobby/delete',
 }
@@ -8,4 +8,7 @@ export enum LobbyActions {
 export enum GameActions {
 	frame = 'game/frame',
 	input = 'game/input',
+	ended = 'game/ended',
 }
+
+export type TypeServer = 'USA' | 'EUR' | 'RUS'

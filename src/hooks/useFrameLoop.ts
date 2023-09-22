@@ -9,10 +9,8 @@ export const useFrameLoop = (
 	useEffect(() => {
 		const loop = (time: number) => {
 			const deltaTime = time - previousTime.current
-			if (deltaTime > 16) {
-				callback(time, deltaTime)
-				previousTime.current = time
-			}
+			callback(time, deltaTime)
+			previousTime.current = time
 			rafId.current = requestAnimationFrame(loop)
 		}
 

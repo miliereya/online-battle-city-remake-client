@@ -1,0 +1,145 @@
+@font-face {
+	font-family: 'Battle City';
+	src: url('../../assets/fonts/prstart.ttf');
+	font-weight: 400;
+	font-style: normal;
+}
+
+.wrapper {
+	display: flex;
+}
+
+.screen {
+	box-sizing: content-box;
+	position: relative;
+	border-top: #747477 solid 16px;
+	border-left: #747477 solid 40px;
+	border-right: #747477 solid 96px;
+	border-bottom: #747477 solid 16px;
+	background-color: #000;
+}
+
+.sidebar {
+	position: absolute;
+	left: 850px;
+
+	.sidebar_text {
+		font-family: 'Battle City';
+		font-size: 35px;
+		line-height: 35px;
+		letter-spacing: 0px;
+	}
+
+	.sidebar_text_stage_num {
+		margin-left: 10px;
+	}
+
+	.stage_wrapper {
+		margin-top: 50px;
+	}
+
+	.tank_container {
+		position: absolute;
+		display: flex;
+		flex-wrap: wrap;
+		width: 64px;
+		margin-top: 20px;
+		.tank_icon_wrapper {
+			height: 30px;
+			margin-bottom: 4px;
+			margin-right: 4px;
+		}
+	}
+
+	.p1_container {
+		margin-top: 450px;
+	}
+	.p2_container {
+		margin-top: 30px;
+	}
+
+	.p_num_wrapper {
+		display: flex;
+		gap: 2px;
+	}
+}
+
+.object {
+	position: absolute;
+}
+
+.row {
+	display: flex;
+}
+
+.pixel {
+	width: 4px;
+	height: 4px;
+}
+
+.emptyPart {
+	width: 32px;
+	height: 32px;
+}
+
+@media (max-width: 1200px) {
+	.pixel {
+		width: 3px;
+		height: 3px;
+	}
+	.screen {
+		border-top: #747477 solid 12px;
+		border-left: #747477 solid 32px;
+		border-right: #747477 solid 72px;
+		border-bottom: #747477 solid 12px;
+	}
+	.sidebar {
+		left: 638px;
+
+		.sidebar_text {
+			font-size: 25px;
+			line-height: 25px;
+		}
+
+		.sidebar_text_stage_num {
+			margin-left: 10px;
+		}
+
+		.stage_wrapper {
+			margin-top: 38px;
+		}
+
+		.tank_container {
+			position: absolute;
+			display: flex;
+			flex-wrap: wrap;
+			width: 48px;
+			margin-top: 17px;
+			.tank_icon_wrapper {
+				height: 30px;
+				margin-bottom: 3px;
+				margin-right: 3px;
+			}
+		}
+
+		.p1_container {
+			margin-top: 358px;
+		}
+		.p2_container {
+			margin-top: 24px;
+		}
+
+		.p_num_wrapper {
+			display: flex;
+			gap: 2px;
+		}
+	}
+}
+
+.done_text {
+	position: absolute;
+	z-index: 2;
+	font-family: 'Battle City';
+	top: 50%;
+	margin-left: 850px;
+}

@@ -1,0 +1,132 @@
+@font-face {
+	font-family: 'Battle City';
+	src: url('../../../assets/fonts/prstart.ttf');
+	font-weight: 400;
+	font-style: normal;
+}
+
+.gray_screen_wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	position: absolute;
+	height: 832px;
+	z-index: 15;
+}
+
+.gray_screen_block {
+	width: 832px;
+	height: 0;
+	background: #747477;
+	animation: 3s screen_gray;
+}
+
+.gray_screen_text {
+	position: absolute;
+	top: 400px;
+	font-size: 30px;
+	line-height: 30px;
+	font-family: 'Battle City';
+	opacity: 0;
+	animation: 3s appear_text;
+}
+
+.game_over_text {
+	position: absolute;
+	color: #e44437;
+	font-size: 30px;
+	line-height: 30px;
+	font-family: 'Battle City';
+	animation: 5s game_over;
+	z-index: 15;
+	left: 50%;
+	margin-left: -60px;
+}
+
+@keyframes appear_text {
+	30% {
+		opacity: 0;
+	}
+	31% {
+		opacity: 1;
+	}
+	69% {
+		opacity: 1;
+	}
+	70% {
+		opacity: 0;
+	}
+}
+
+@keyframes screen_gray {
+	0% {
+		height: 0px;
+	}
+	30% {
+		height: 426px;
+	}
+	70% {
+		height: 426px;
+	}
+}
+
+@keyframes game_over {
+	0% {
+		bottom: 0;
+	}
+	75% {
+		bottom: 400px;
+	}
+	100% {
+		bottom: 400px;
+	}
+}
+
+@media (max-width: 1200px) {
+	.gray_screen_wrapper {
+		height: 624px;
+	}
+
+	.gray_screen_block {
+		width: 624px;
+		animation: 3s screen_gray_1200;
+	}
+
+	.gray_screen_text {
+		top: 300px;
+		font-size: 23px;
+		line-height: 23px;
+	}
+
+	.game_over_text {
+		font-size: 23px;
+		line-height: 23px;
+		animation: 5s game_over_1200;
+		margin-left: -50px;
+	}
+
+	@keyframes screen_gray_1200 {
+		0% {
+			height: 0px;
+		}
+		30% {
+			height: 320px;
+		}
+		70% {
+			height: 320px;
+		}
+	}
+
+	@keyframes game_over_1200 {
+		0% {
+			bottom: 0;
+		}
+		75% {
+			bottom: 300px;
+		}
+		100% {
+			bottom: 300px;
+		}
+	}
+}
