@@ -16,6 +16,7 @@ import { useAudio } from '../hooks/useAudio'
 import { useMoveAudio } from '../hooks/useMoveAudio'
 import { useGame } from '../game/provider'
 import { usePixel } from '../hooks/usePixel'
+import { Pause } from './animations/pause'
 
 export const GameLocal = () => {
 	const pixel = usePixel()
@@ -154,6 +155,7 @@ export const GameLocal = () => {
 		>
 			{game.levelChangeAnimation && <LevelChangeAnimation level={game.level} />}
 			{game.gameOverAnimation && <GameOverAnimation />}
+			{game.isPaused && <Pause />}
 			<Players p1={game.p1} p2={game.p2} />
 			<Objects objects={game.objects} />
 			<Bullets bullets={game.bullets} />

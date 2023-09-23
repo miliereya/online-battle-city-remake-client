@@ -63,7 +63,6 @@ export const lobbyActions = {
 		const socket = getCurrentSocket(server)
 		socket.emit(LobbyActions.join, name)
 		socket.on(GameActions.frame, ({ game, ping }: any) => {
-			console.log('h')
 			setGame(game)
 			// console.log(new Date().getTime() - ping)
 
