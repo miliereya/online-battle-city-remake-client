@@ -3,9 +3,11 @@ import s from '../game.module.scss'
 import RenderObject from '../render'
 import { hp } from '@/battle-city/render/bonuses/hp'
 import { usePixel } from '@/battle-city/hooks/usePixel'
+import { Pixel } from '@/battle-city/types/render.types'
 
 interface HpProps {
 	hp: Bonus
+	pixel: Pixel
 }
 
 let tick = 1
@@ -15,14 +17,13 @@ setInterval(() => {
 
 export const Hp = (props: HpProps) => {
 	const { coordinateX, coordinateY, id } = props.hp
-	const pixel = usePixel()
 
 	return (
 		<div
 			className={s.object}
 			style={{
-				left: `${coordinateX * pixel}px`,
-				bottom: `${coordinateY * pixel}px`,
+				left: `${coordinateX * props.pixel}px`,
+				bottom: `${coordinateY * props.pixel}px`,
 				zIndex: 10,
 				opacity: tick === 1 ? 1 : 0,
 			}}

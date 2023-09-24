@@ -8,6 +8,7 @@ import { getDirectionDegrees } from '../utils/style.utils'
 import { tank_p1__lvl_0 } from '../render/p1/tank-lvl_0'
 import RenderObject from './render'
 import { useGame } from '../game/provider'
+import { LevelChangeAnimation } from './animations/level-change'
 
 const calculatePlayerYCoordinates = (choose: number) => {
 	switch (choose) {

@@ -4,6 +4,7 @@ import RenderObject from '../render'
 import { tank_normal_bonus } from '@/battle-city/render/normal/tank-normal-bonus'
 import { Tank } from '@/battle-city/game/init'
 import { usePixel } from '@/battle-city/hooks/usePixel'
+import { Pixel } from '@/battle-city/types/render.types'
 
 let bonusTick = 1
 
@@ -13,11 +14,11 @@ setInterval(() => {
 
 interface TankNormalProps {
 	tank: Tank
+	pixel: Pixel
 }
 
 export const TankNormal = (props: TankNormalProps) => {
 	const { coordinateX, coordinateY, direction, tick, bonus } = props.tank
-	const pixel = usePixel()
 	return (
 		<>
 			{bonus ? (
@@ -25,8 +26,8 @@ export const TankNormal = (props: TankNormalProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 1 ? 2 : 1,
 						}}
@@ -38,8 +39,8 @@ export const TankNormal = (props: TankNormalProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 2 ? 2 : 1,
 						}}
@@ -51,8 +52,8 @@ export const TankNormal = (props: TankNormalProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 1 && bonusTick === 2 ? 4 : 0,
 						}}
@@ -64,8 +65,8 @@ export const TankNormal = (props: TankNormalProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 2 && bonusTick === 2 ? 4 : 0,
 						}}
@@ -80,8 +81,8 @@ export const TankNormal = (props: TankNormalProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 1 ? 2 : 1,
 						}}
@@ -93,8 +94,8 @@ export const TankNormal = (props: TankNormalProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 2 ? 2 : 1,
 						}}

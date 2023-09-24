@@ -4,6 +4,7 @@ import { FC } from 'react'
 import RenderObject from '../render'
 import { Tank } from '@/battle-city/game/init'
 import { usePixel } from '@/battle-city/hooks/usePixel'
+import { Pixel } from '@/battle-city/types/render.types'
 
 const heavy_1hp = tank_heavy('#183767', '#d2d2d2', '#ececec')
 const heavy_2hp = tank_heavy('#175111', '#e98a00', '#f9ea8b')
@@ -18,11 +19,11 @@ setInterval(() => {
 
 interface TankHeavyProps {
 	tank: Tank
+	pixel: Pixel
 }
 
-export const TankHeavy: FC<TankHeavyProps> = ({ tank }) => {
+export const TankHeavy: FC<TankHeavyProps> = ({ tank, pixel }) => {
 	const { coordinateX, coordinateY, direction, tick, lives, bonus } = tank
-	const pixel = usePixel()
 
 	return (
 		<>

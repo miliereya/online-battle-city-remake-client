@@ -3,9 +3,11 @@ import RenderObject from '../render'
 import { star } from '@/battle-city/render/bonuses/star'
 import { Bonus } from '@/battle-city/game/init'
 import { usePixel } from '@/battle-city/hooks/usePixel'
+import { Pixel } from '@/battle-city/types/render.types'
 
 interface StarProps {
 	star: Bonus
+	pixel: Pixel
 }
 
 let tick = 1
@@ -15,14 +17,13 @@ setInterval(() => {
 
 export const Star = (props: StarProps) => {
 	const { coordinateX, coordinateY, id } = props.star
-	const pixel = usePixel()
 
 	return (
 		<div
 			className={s.object}
 			style={{
-				left: `${coordinateX * pixel}px`,
-				bottom: `${coordinateY * pixel}px`,
+				left: `${coordinateX * props.pixel}px`,
+				bottom: `${coordinateY * props.pixel}px`,
 				zIndex: 10,
 				opacity: tick === 1 ? 1 : 0,
 			}}

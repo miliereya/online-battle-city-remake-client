@@ -34,7 +34,7 @@ export const Player2 = (props: PlayerProps) => {
 	return (
 		<>
 			{spawnAnimation ? (
-				<SpawnAnimation tank={props.p} />
+				<SpawnAnimation pixel={pixel} tank={props.p} />
 			) : (
 				<>
 					{helmet && (

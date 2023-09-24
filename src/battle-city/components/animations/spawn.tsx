@@ -3,22 +3,23 @@ import RenderObject from '../render'
 import { spawn } from '@/battle-city/render/animations/spawn'
 import { Tank } from '@/battle-city/game/init'
 import { usePixel } from '@/battle-city/hooks/usePixel'
+import { Pixel } from '@/battle-city/types/render.types'
 
 interface Props {
 	tank: Tank
+	pixel: Pixel
 }
 
 export const SpawnAnimation = (props: Props) => {
 	const { coordinateX, coordinateY, id, spawnAnimation: sp } = props.tank
-	const pixel = usePixel()
 
 	return (
 		<>
 			<div
 				className={s.object}
 				style={{
-					left: `${(coordinateX - 7) * pixel}px`,
-					bottom: `${(coordinateY - 7) * pixel}px`,
+					left: `${(coordinateX - 7) * props.pixel}px`,
+					bottom: `${(coordinateY - 7) * props.pixel}px`,
 					zIndex: 10,
 					opacity:
 						(sp > 0 && sp < 3) || (sp >= 18 && sp < 21) || (sp >= 36 && sp < 39)
@@ -33,8 +34,8 @@ export const SpawnAnimation = (props: Props) => {
 			<div
 				className={s.object}
 				style={{
-					left: `${(coordinateX - 7) * pixel}px`,
-					bottom: `${(coordinateY - 7) * pixel}px`,
+					left: `${(coordinateX - 7) * props.pixel}px`,
+					bottom: `${(coordinateY - 7) * props.pixel}px`,
 					zIndex: 10,
 					opacity:
 						(sp >= 3 && sp < 6) ||
@@ -53,8 +54,8 @@ export const SpawnAnimation = (props: Props) => {
 			<div
 				className={s.object}
 				style={{
-					left: `${(coordinateX - 7) * pixel}px`,
-					bottom: `${(coordinateY - 7) * pixel}px`,
+					left: `${(coordinateX - 7) * props.pixel}px`,
+					bottom: `${(coordinateY - 7) * props.pixel}px`,
 					zIndex: 10,
 					opacity:
 						(sp >= 6 && sp < 9) ||
@@ -73,8 +74,8 @@ export const SpawnAnimation = (props: Props) => {
 			<div
 				className={s.object}
 				style={{
-					left: `${(coordinateX - 7) * pixel}px`,
-					bottom: `${(coordinateY - 7) * pixel}px`,
+					left: `${(coordinateX - 7) * props.pixel}px`,
+					bottom: `${(coordinateY - 7) * props.pixel}px`,
 					zIndex: 10,
 					opacity:
 						(sp >= 9 && sp < 12) ||

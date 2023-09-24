@@ -4,6 +4,7 @@ import RenderObject from '../render'
 import { tank_speedy_bonus } from '@/battle-city/render/speedy/tank-speedy-bonus'
 import { Tank } from '@/battle-city/game/init'
 import { usePixel } from '@/battle-city/hooks/usePixel'
+import { Pixel } from '@/battle-city/types/render.types'
 
 let bonusTick = 1
 
@@ -13,11 +14,11 @@ setInterval(() => {
 
 interface TankSpeedyProps {
 	tank: Tank
+	pixel: Pixel
 }
 
 export const TankSpeedy = (props: TankSpeedyProps) => {
 	const { coordinateX, coordinateY, direction, tick, bonus } = props.tank
-	const pixel = usePixel()
 
 	return (
 		<>
@@ -26,8 +27,8 @@ export const TankSpeedy = (props: TankSpeedyProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 1 ? 2 : 1,
 						}}
@@ -39,8 +40,8 @@ export const TankSpeedy = (props: TankSpeedyProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 2 ? 2 : 1,
 						}}
@@ -52,8 +53,8 @@ export const TankSpeedy = (props: TankSpeedyProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 1 && bonusTick === 2 ? 4 : 0,
 						}}
@@ -65,8 +66,8 @@ export const TankSpeedy = (props: TankSpeedyProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 2 && bonusTick === 2 ? 4 : 0,
 						}}
@@ -81,8 +82,8 @@ export const TankSpeedy = (props: TankSpeedyProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 1 ? 2 : 1,
 						}}
@@ -94,8 +95,8 @@ export const TankSpeedy = (props: TankSpeedyProps) => {
 					<div
 						style={{
 							rotate: getDirectionDegrees(direction),
-							left: `${(coordinateX - 7) * pixel}px`,
-							bottom: `${(coordinateY - 7) * pixel}px`,
+							left: `${(coordinateX - 7) * props.pixel}px`,
+							bottom: `${(coordinateY - 7) * props.pixel}px`,
 							position: 'absolute',
 							zIndex: tick === 2 ? 2 : 1,
 						}}
