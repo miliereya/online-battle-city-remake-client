@@ -96,8 +96,8 @@ export const GameOnline = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [game?.id])
 
-	useAudio(game?.sounds)
-	useMoveAudio(game?.sounds.player_move, game?.sounds.enemy_move)
+	useAudio(game?.sounds, game?.settings)
+	useMoveAudio(game?.sounds.player_move, game?.sounds.enemy_move, game?.settings)
 
 	return !game ? null : (
 		<div

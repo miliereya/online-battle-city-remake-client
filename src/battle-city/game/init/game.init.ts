@@ -101,6 +101,10 @@ export class Game {
 	}
 
 	nextLevel() {
+		if (this.level === 11) {
+			this.isEnded = true
+			return
+		}
 		let map: Map
 		if (this.editor) {
 			map = EditorMap(this.editor)

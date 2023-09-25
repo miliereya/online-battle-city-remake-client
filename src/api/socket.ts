@@ -39,12 +39,13 @@ export const lobbyActions = {
 		editor?: EditorObject[]
 	) {
 		const socket = getCurrentSocket(server)
-		socket.on(GameActions.frame, ({ game, ping }) => {
-			// console.log(new Date().getTime() - ping)
-			setGame(game)
+		socket.on(GameActions.frame, ({ game }: { game: Game }) => {
+			if (game.isEnded) {
+				socket.off(GameActions.frame)
+				setGame(undefined)
+			} else setGame(game)
 		})
 
-		// socket frame off if lobby deleted
 		socket.emit(
 			LobbyActions.create,
 			{ name, settings, editor },
@@ -62,17 +63,18 @@ export const lobbyActions = {
 	) {
 		const socket = getCurrentSocket(server)
 		socket.emit(LobbyActions.join, name)
-		socket.on(GameActions.frame, ({ game, ping }: any) => {
-			setGame(game)
-			// console.log(new Date().getTime() - ping)
-
-			// socket off if game over
+		socket.on(GameActions.frame, ({ game }: { game: Game }) => {
+			if (game.isEnded) {
+				setGame(undefined)
+				socket.off(GameActions.frame)
+			} else setGame(game)
 		})
 	},
 
 	delete(server: TypeServer, name: string) {
 		const socket = getCurrentSocket(server)
 		socket.emit(LobbyActions.delete, name)
+		socket.off(GameActions.frame)
 	},
 
 	input(server: TypeServer, button: string, gameId: string) {
