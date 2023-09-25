@@ -13,6 +13,7 @@ export const useMoveAudio = (
 	const [soundPrev, setSoundPrev] = useState<PrevSound>(null)
 	const playerMoveSound = useRef<HTMLAudioElement | null>(null)
 	const enemyMoveSound = useRef<HTMLAudioElement | null>(null)
+	const marioThemeSound = useRef<HTMLAudioElement | null>(null)
 
 	useEffect(() => {
 		if (!settings) return
@@ -22,20 +23,30 @@ export const useMoveAudio = (
 		enemyMoveSound.current = new Audio(
 			`/audio/${settings.soundPack}/enemy_move.ogg`
 		)
+		marioThemeSound.current = new Audio(`/audio/mario/theme.ogg`)
 	}, [settings])
 
 	useEffect(() => {
 		if (soundPrev === 'player') {
-			playerMoveSound.current?.play()
-			enemyMoveSound.current?.pause()
+			if (settings?.soundPack === 'mario') {
+				marioThemeSound.current?.play()
+			} else {
+				playerMoveSound.current?.play()
+				enemyMoveSound.current?.pause()
+			}
 		} else if (soundPrev === 'enemy') {
-			playerMoveSound.current?.pause()
-			enemyMoveSound.current?.play()
+			if (settings?.soundPack === 'mario') {
+				marioThemeSound.current?.play()
+			} else {
+				playerMoveSound.current?.pause()
+				enemyMoveSound.current?.play()
+			}
 		} else {
 			playerMoveSound.current?.pause()
 			enemyMoveSound.current?.pause()
 		}
 		return () => {
+			marioThemeSound.current?.pause()
 			enemyMoveSound.current?.pause()
 			playerMoveSound.current?.pause()
 		}
