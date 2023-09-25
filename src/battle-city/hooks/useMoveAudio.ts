@@ -1,11 +1,13 @@
 'use client'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { GameSettings } from '../game/provider'
 
 type PrevSound = null | 'player' | 'enemy'
 
 export const useMoveAudio = (
 	isPlayerMoving: boolean | undefined,
-	isEnemyMoving: boolean | undefined
+	isEnemyMoving: boolean | undefined,
+	settings: GameSettings | undefined
 	// isEnemyMoving: boolean
 ) => {
 	const [soundPrev, setSoundPrev] = useState<PrevSound>(null)
@@ -13,9 +15,14 @@ export const useMoveAudio = (
 	const enemyMoveSound = useRef<HTMLAudioElement | null>(null)
 
 	useEffect(() => {
-		playerMoveSound.current = new Audio(`/player_move.ogg`)
-		enemyMoveSound.current = new Audio(`/enemy_move.ogg`)
-	}, [])
+		if (!settings) return
+		playerMoveSound.current = new Audio(
+			`/audio/${settings.soundPack}/player_move.ogg`
+		)
+		enemyMoveSound.current = new Audio(
+			`/audio/${settings.soundPack}/enemy_move.ogg`
+		)
+	}, [settings])
 
 	useEffect(() => {
 		if (soundPrev === 'player') {

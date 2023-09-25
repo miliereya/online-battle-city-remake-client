@@ -140,8 +140,12 @@ export const GameLocal = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [game])
 
-	useAudio(game?.sounds)
-	useMoveAudio(game?.sounds.player_move, game?.sounds.enemy_move)
+	useAudio(game?.sounds, game?.settings)
+	useMoveAudio(
+		game?.sounds.player_move,
+		game?.sounds.enemy_move,
+		game?.settings
+	)
 
 	if (!game) return
 

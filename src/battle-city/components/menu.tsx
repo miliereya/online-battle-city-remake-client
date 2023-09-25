@@ -42,6 +42,9 @@ export const Menu = () => {
 	} = useGame()
 	const [lobbyName, setLobbyName] = useState('')
 	const [isEditingLobbyName, setEditingLobbyName] = useState(false)
+	const [soundPack, setSoundPack] = useState<'default' | 'mario' | 'funny'>(
+		'default'
+	)
 
 	const [findLobbyName, setFindLobbyName] = useState('')
 	const [isEditingFindLobbyName, setEditingFindLobbyName] = useState(false)
@@ -74,6 +77,7 @@ export const Menu = () => {
 			hardcore: isHardcore,
 			playerLevel,
 			friendlyFire: isFriendlyFire,
+			soundPack,
 		}
 		const chooseHandler = (e: KeyboardEvent) => {
 			let code = e.code
@@ -94,6 +98,7 @@ export const Menu = () => {
 				(code === 'KeyW' || code === 'KeyI')
 			) {
 				setChoose((prev) => (prev !== 1 ? prev - 1 : range))
+				new Audio(`/audio/${soundPack}/menu.ogg`).play()
 			}
 			if (
 				!isEditingLobbyName &&
@@ -101,6 +106,7 @@ export const Menu = () => {
 				(code === 'KeyS' || code === 'KeyK')
 			) {
 				setChoose((prev) => (prev !== range ? prev + 1 : 1))
+				new Audio(`/audio/${soundPack}/menu.ogg`).play()
 			}
 			if (code === 'Space') {
 				if (isEditingLobbyName) {
@@ -254,8 +260,19 @@ export const Menu = () => {
 					case 'settings':
 						switch (choose) {
 							case 1:
-								isSettingChanged = true
-								break
+								if (soundPack === 'default') {
+									setSoundPack('mario')
+									new Audio(`/audio/mario/menu.ogg`).play()
+									return
+								} else if (soundPack === 'mario') {
+									setSoundPack('funny')
+									new Audio(`/audio/funny/menu.ogg`).play()
+									return
+								} else {
+									setSoundPack('default')
+									new Audio(`/audio/default/menu.ogg`).play()
+									return
+								}
 							case 2:
 								isSettingChanged = true
 								setFriendlyFire((prev) => !prev)
@@ -286,6 +303,7 @@ export const Menu = () => {
 						break
 				}
 				if (!isSettingChanged) setChoose(1)
+				new Audio(`/audio/${soundPack}/shoot.ogg`).play()
 			}
 		}
 		document.addEventListener('keypress', chooseHandler)
@@ -315,6 +333,7 @@ export const Menu = () => {
 		checkPing,
 		deleteLobby,
 		lobby,
+		soundPack,
 	])
 
 	const setLobbyNameHandler = (val: string) => {
@@ -443,7 +462,7 @@ export const Menu = () => {
 					)}
 					{state === 'settings' && (
 						<>
-							<p className={s.menu_text}>SOUND PACK (1)</p>
+							<p className={s.menu_text}>SOUND ({soundPack})</p>
 							<p className={s.menu_text}>
 								FRIENDLY FIRE ({isFriendlyFire ? 'Y' : 'N'})
 							</p>

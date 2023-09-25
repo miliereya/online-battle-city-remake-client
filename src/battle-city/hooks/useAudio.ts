@@ -1,9 +1,10 @@
 'use client'
 
+import { GameSettings } from '../game/provider'
 import { getKeys } from '../utils/object.utils'
 
-export const useAudio = <T>(sounds: T) => {
-	if (!sounds) return
+export const useAudio = <T>(sounds: T, settings: GameSettings | undefined) => {
+	if (!sounds || !settings) return
 	const titles = getKeys(sounds)
 
 	for (let i = 0; i < titles.length; i++) {
@@ -13,7 +14,7 @@ export const useAudio = <T>(sounds: T) => {
 				titles[i] !== 'enemy_move' &&
 				typeof Audio !== undefined
 			)
-				new Audio(`/${String(titles[i])}.ogg`).play()
+				new Audio(`/audio/${settings.soundPack}/${String(titles[i])}.ogg`).play()
 		}
 	}
 }

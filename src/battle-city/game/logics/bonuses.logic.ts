@@ -1,4 +1,4 @@
-import { Game, Tank } from '../init'
+import { Bang, Game, Tank } from '../init'
 import { deleteBonus, mutationFilter } from '../utils'
 
 export const bonusesFrameLogic = (game: Game) => {
@@ -35,7 +35,14 @@ export const bonusesFrameLogic = (game: Game) => {
 					if (!game.settings.hardcore && p.lives < 3) p.lives++
 					break
 				case 'GRENADE':
-					mutationFilter(enemies, (e: Tank) => e.spawnAnimation)
+					mutationFilter(enemies, (e: Tank) => {
+						if (e.spawnAnimation) {
+							return true
+						} else {
+							game.bangs.push(new Bang('BIG', e.coordinateX, e.coordinateY))
+							return false
+						}
+					})
 					sounds.bang = true
 					break
 				case 'HELMET':
