@@ -201,7 +201,7 @@ export const Menu = () => {
 							case 2:
 								if (!lobbyName) return
 								createLobbyHandler(
-									lobbyName,
+									lobbyName.toLocaleLowerCase(),
 									settings,
 									isEdited ? editor : undefined
 								)
