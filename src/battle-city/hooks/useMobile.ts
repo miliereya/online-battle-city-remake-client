@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react"
+'use client'
+import { useEffect, useState } from 'react'
 
 export const useMobile = () => {
-	const [width, setWidth] = useState(window.innerWidth)
+	const [width, setWidth] = useState(
+		typeof window !== 'undefined' ? window.innerWidth : 0
+	)
 	const handleWindowSizeChange = () => {
 		setWidth(window.innerWidth)
 	}
