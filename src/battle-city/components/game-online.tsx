@@ -23,6 +23,7 @@ import { useMoveAudio } from '../hooks/useMoveAudio'
 import { useGame } from '../game/provider'
 import { usePixel } from '../hooks/usePixel'
 import { Pause } from './animations/pause'
+import { isMobile } from 'react-device-detect'
 
 export const GameOnline = () => {
 	const { game, server } = useGame()
@@ -83,21 +84,131 @@ export const GameOnline = () => {
 				setMovement(null)
 			}
 		}
-		document.addEventListener('keypress', moveHandler)
-		document.addEventListener('keyup', clearMovement)
-		document.addEventListener('keypress', fireHandler)
-		document.addEventListener('keypress', pauseHandler)
+		const fireMobileHandler1 = () => {
+			if (game) lobbyActions.input(server, 'FIRE', game.id)
+		}
+
+		const pauseMobileHandler = () => {
+			if (game) lobbyActions.input(server, 'SPACE', game.id)
+		}
+
+		let move1Timer: NodeJS.Timeout
+
+		const moveTopHandler1 = () => {
+			move1Timer = setInterval(() => {
+				if (game) lobbyActions.input(server, 'TOP', game.id)
+			}, 10)
+		}
+
+		const moveRightHandler1 = () => {
+			move1Timer = setInterval(() => {
+				if (game) lobbyActions.input(server, 'RIGHT', game.id)
+			}, 10)
+		}
+
+		const moveLeftHandler1 = () => {
+			move1Timer = setInterval(() => {
+				if (game) lobbyActions.input(server, 'LEFT', game.id)
+			}, 10)
+		}
+
+		const moveBottomHandler1 = () => {
+			move1Timer = setInterval(() => {
+				if (game) lobbyActions.input(server, 'BOTTOM', game.id)
+			}, 10)
+		}
+
+		const clearMobileMovement = () => {
+			clearInterval(move1Timer)
+
+			setMovement(null)
+		}
+
+		if (isMobile) {
+			document
+				.getElementById('fire1')
+				?.addEventListener('click', fireMobileHandler1)
+			document
+				.getElementById('space')
+				?.addEventListener('click', pauseMobileHandler)
+			document
+				.getElementById('top1')
+				?.addEventListener('touchstart', moveTopHandler1)
+			document
+				.getElementById('top1')
+				?.addEventListener('touchend', clearMobileMovement)
+			document
+				.getElementById('bottom1')
+				?.addEventListener('touchstart', moveBottomHandler1)
+			document
+				.getElementById('bottom1')
+				?.addEventListener('touchend', clearMobileMovement)
+			document
+				.getElementById('right1')
+				?.addEventListener('touchstart', moveRightHandler1)
+			document
+				.getElementById('right1')
+				?.addEventListener('touchend', clearMobileMovement)
+			document
+				.getElementById('left1')
+				?.addEventListener('touchstart', moveLeftHandler1)
+			document
+				.getElementById('left1')
+				?.addEventListener('touchend', clearMobileMovement)
+		} else {
+			document.addEventListener('keypress', moveHandler)
+			document.addEventListener('keyup', clearMovement)
+			document.addEventListener('keypress', fireHandler)
+			document.addEventListener('keypress', pauseHandler)
+		}
 		return () => {
-			document.removeEventListener('keypress', moveHandler)
-			document.removeEventListener('keypress', fireHandler)
-			document.removeEventListener('keyup', clearMovement)
-			document.removeEventListener('keypress', pauseHandler)
+			if (isMobile) {
+				document
+					.getElementById('fire1')
+					?.removeEventListener('click', fireMobileHandler1)
+				document
+					.getElementById('space')
+					?.removeEventListener('click', pauseMobileHandler)
+				document
+					.getElementById('top1')
+					?.removeEventListener('touchstart', moveTopHandler1)
+				document
+					.getElementById('top1')
+					?.addEventListener('touchend', clearMobileMovement)
+				document
+					.getElementById('bottom1')
+					?.removeEventListener('touchstart', moveBottomHandler1)
+				document
+					.getElementById('bottom1')
+					?.addEventListener('touchend', clearMobileMovement)
+				document
+					.getElementById('right1')
+					?.removeEventListener('touchstart', moveRightHandler1)
+				document
+					.getElementById('right1')
+					?.addEventListener('touchend', clearMobileMovement)
+				document
+					.getElementById('left1')
+					?.removeEventListener('touchstart', moveLeftHandler1)
+				document
+					.getElementById('left1')
+					?.addEventListener('touchend', clearMobileMovement)
+			} else {
+				document.removeEventListener('keypress', moveHandler)
+				document.removeEventListener('keypress', fireHandler)
+				document.removeEventListener('keyup', clearMovement)
+				document.removeEventListener('keypress', pauseHandler)
+			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [game?.id])
 
 	useAudio(game?.sounds, game?.settings)
-	useMoveAudio(game?.sounds.player_move, game?.sounds.enemy_move, game?.settings)
+	useMoveAudio(
+		game?.sounds.player_move,
+		game?.sounds.enemy_move,
+		game?.settings
+	)
 
 	return !game ? null : (
 		<div

@@ -19,7 +19,7 @@ import { tank_normal } from '../render/normal/tank-normal'
 import { getDirectionDegrees } from '../utils/style.utils'
 import { usePixel } from '../hooks/usePixel'
 import { Player } from '../game/init'
-import { useMobile } from '../hooks/useMobile'
+import { isMobile } from 'react-device-detect'
 
 interface EditorProps {
 	objects: CreateGameObject[]
@@ -36,7 +36,6 @@ export const Editor = (props: EditorProps) => {
 	const [y, setY] = useState(13)
 	const [id, setId] = useState(0)
 	const [isDoneSelected, setDoneSelected] = useState(false)
-	const isMobile = useMobile()
 
 	useEffect(() => {
 		const chooseHandler = (code: string) => {
@@ -227,9 +226,9 @@ export const Editor = (props: EditorProps) => {
 				document
 					.getElementById('left2')
 					?.removeEventListener('click', chooseLeftHandler)
-					document
-						.getElementById('space')
-						?.removeEventListener('click', chooseSpaceHandler)
+				document
+					.getElementById('space')
+					?.removeEventListener('click', chooseSpaceHandler)
 			} else {
 				document.removeEventListener('keypress', chooseHandlerListener)
 			}

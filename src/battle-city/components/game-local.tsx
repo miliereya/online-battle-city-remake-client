@@ -17,14 +17,13 @@ import { useMoveAudio } from '../hooks/useMoveAudio'
 import { useGame } from '../game/provider'
 import { usePixel } from '../hooks/usePixel'
 import { Pause } from './animations/pause'
-import { useMobile } from '../hooks/useMobile'
+import { isMobile } from 'react-device-detect'
 
 export const GameLocal = () => {
 	const pixel = usePixel()
 	const { game, inputHandler, inputHandler2 } = useGame()
 	const [movement, setMovement] = useState<TypeMoveButton | null>(null)
 	const [movement2, setMovement2] = useState<TypeMoveButton | null>(null)
-	const isMobile = useMobile()
 
 	const callbackForGameLoop = useCallback(() => {
 		if (!movement || !game) return
@@ -155,8 +154,30 @@ export const GameLocal = () => {
 			move1Timer = setInterval(() => inputHandler('BOTTOM'), 10)
 		}
 
+		const moveTopHandler2 = () => {
+			move2Timer = setInterval(() => inputHandler2('TOP'), 10)
+		}
+
+		const moveRightHandler2 = () => {
+			move2Timer = setInterval(() => inputHandler2('RIGHT'), 10)
+		}
+
+		const moveLeftHandler2 = () => {
+			move2Timer = setInterval(() => inputHandler2('LEFT'), 10)
+		}
+
+		const moveBottomHandler2 = () => {
+			move2Timer = setInterval(() => inputHandler2('BOTTOM'), 10)
+		}
+
 		const clearMobileMovement = () => {
 			clearInterval(move1Timer)
+
+			setMovement(null)
+		}
+
+		const clearMobileMovement2 = () => {
+			clearInterval(move2Timer)
 
 			setMovement(null)
 		}
@@ -195,6 +216,31 @@ export const GameLocal = () => {
 			document
 				.getElementById('left1')
 				?.addEventListener('touchend', clearMobileMovement)
+
+			document
+				.getElementById('top2')
+				?.addEventListener('touchstart', moveTopHandler2)
+			document
+				.getElementById('top2')
+				?.addEventListener('touchend', clearMobileMovement2)
+			document
+				.getElementById('bottom2')
+				?.addEventListener('touchstart', moveBottomHandler2)
+			document
+				.getElementById('bottom2')
+				?.addEventListener('touchend', clearMobileMovement2)
+			document
+				.getElementById('right2')
+				?.addEventListener('touchstart', moveRightHandler2)
+			document
+				.getElementById('right2')
+				?.addEventListener('touchend', clearMobileMovement2)
+			document
+				.getElementById('left2')
+				?.addEventListener('touchstart', moveLeftHandler2)
+			document
+				.getElementById('left2')
+				?.addEventListener('touchend', clearMobileMovement2)
 		} else {
 			document.addEventListener('keypress', moveHandler)
 			document.addEventListener('keypress', moveHandler2)
@@ -239,6 +285,31 @@ export const GameLocal = () => {
 				document
 					.getElementById('left1')
 					?.addEventListener('touchend', clearMobileMovement)
+
+				document
+					.getElementById('top2')
+					?.removeEventListener('touchstart', moveTopHandler2)
+				document
+					.getElementById('top2')
+					?.addEventListener('touchend', clearMobileMovement2)
+				document
+					.getElementById('bottom2')
+					?.removeEventListener('touchstart', moveBottomHandler2)
+				document
+					.getElementById('bottom2')
+					?.addEventListener('touchend', clearMobileMovement2)
+				document
+					.getElementById('right2')
+					?.removeEventListener('touchstart', moveRightHandler2)
+				document
+					.getElementById('right2')
+					?.addEventListener('touchend', clearMobileMovement2)
+				document
+					.getElementById('left2')
+					?.removeEventListener('touchstart', moveLeftHandler2)
+				document
+					.getElementById('left2')
+					?.addEventListener('touchend', clearMobileMovement2)
 			} else {
 				document.removeEventListener('keypress', moveHandler)
 				document.removeEventListener('keypress', moveHandler2)
