@@ -38,7 +38,7 @@ import { ILobby } from '../types/lobby.types'
 import { CreateGameObject, TypeMoveButton } from '../types/game.types'
 import { useFrameLoop } from '@/hooks/useFrameLoop'
 import { TypeServer } from '@/api/socket.types'
-import { useMobile } from '../hooks/useMobile'
+import { isMobile } from 'react-device-detect'
 
 export interface GameSettings {
 	hardcore: boolean
@@ -97,7 +97,6 @@ interface GameProviderProps {
 
 const GameProvider: FC<GameProviderProps> = ({ children }) => {
 	const [game, setGame] = useState<Game>()
-	const isMobile = useMobile()
 	const [lobby, setLobby] = useState<ILobby>()
 	const [lobbies, setLobbies] = useState<ILobby[]>([])
 	const [server, setServer] = useState<TypeServer>('USA')

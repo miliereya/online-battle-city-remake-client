@@ -9,7 +9,7 @@ import { tank_p1__lvl_0 } from '../render/p1/tank-lvl_0'
 import RenderObject from './render'
 import { useGame } from '../game/provider'
 import { LevelChangeAnimation } from './animations/level-change'
-import { useMobile } from '../hooks/useMobile'
+import { isMobile } from 'react-device-detect'
 
 const calculatePlayerYCoordinates = (choose: number) => {
 	switch (choose) {
@@ -71,8 +71,6 @@ export const Menu = () => {
 		| 'find lobby'
 	>('main')
 	const [isEditorMode, setEditorMode] = useState(false)
-
-	const isMobile = useMobile()
 
 	useEffect(() => {
 		if (isEditorMode || game) return
@@ -396,7 +394,6 @@ export const Menu = () => {
 		deleteLobby,
 		lobby,
 		soundPack,
-		isMobile,
 	])
 
 	const setLobbyNameHandler = (val: string) => {
