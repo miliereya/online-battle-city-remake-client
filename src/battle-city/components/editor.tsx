@@ -19,6 +19,7 @@ import { tank_normal } from '../render/normal/tank-normal'
 import { getDirectionDegrees } from '../utils/style.utils'
 import { usePixel } from '../hooks/usePixel'
 import { Player } from '../game/init'
+import { useMobile } from '../hooks/useMobile'
 
 interface EditorProps {
 	objects: CreateGameObject[]
@@ -35,10 +36,10 @@ export const Editor = (props: EditorProps) => {
 	const [y, setY] = useState(13)
 	const [id, setId] = useState(0)
 	const [isDoneSelected, setDoneSelected] = useState(false)
+	const isMobile = useMobile()
 
 	useEffect(() => {
-		const keyboardHandler = (e: KeyboardEvent) => {
-			let code = e.code
+		const chooseHandler = (code: string) => {
 			if (isDoneSelected) {
 				if (code === 'KeyA') {
 					setDoneSelected(false)
@@ -128,10 +129,110 @@ export const Editor = (props: EditorProps) => {
 				}
 			}
 		}
-		document.addEventListener('keypress', keyboardHandler)
+		const chooseHandlerListener = (e: KeyboardEvent) => {
+			chooseHandler(e.code)
+		}
+
+		const chooseTopHandler = () => {
+			chooseHandler('KeyW')
+		}
+
+		const chooseBottomHandler = () => {
+			chooseHandler('KeyS')
+		}
+
+		const chooseLeftHandler = () => {
+			chooseHandler('KeyA')
+		}
+
+		const chooseRightHandler = () => {
+			chooseHandler('KeyD')
+		}
+
+		const chooseMobileHandler = () => {
+			chooseHandler('Space')
+		}
+
+		const chooseSpaceHandler = () => {
+			chooseHandler('KeyF')
+		}
+
+		if (isMobile) {
+			document
+				.getElementById('space')
+				?.addEventListener('click', chooseSpaceHandler)
+			document
+				.getElementById('fire1')
+				?.addEventListener('click', chooseMobileHandler)
+			document
+				.getElementById('top1')
+				?.addEventListener('click', chooseTopHandler)
+			document
+				.getElementById('right1')
+				?.addEventListener('click', chooseRightHandler)
+			document
+				.getElementById('left1')
+				?.addEventListener('click', chooseLeftHandler)
+			document
+				.getElementById('right2')
+				?.addEventListener('click', chooseRightHandler)
+			document
+				.getElementById('left2')
+				?.addEventListener('click', chooseLeftHandler)
+			document
+				.getElementById('bottom1')
+				?.addEventListener('click', chooseBottomHandler)
+			document
+				.getElementById('fire2')
+				?.addEventListener('click', chooseMobileHandler)
+			document
+				.getElementById('top2')
+				?.addEventListener('click', chooseTopHandler)
+			document
+				.getElementById('bottom2')
+				?.addEventListener('click', chooseBottomHandler)
+		} else {
+			document.addEventListener('keypress', chooseHandlerListener)
+		}
 
 		return () => {
-			document.removeEventListener('keypress', keyboardHandler)
+			if (isMobile) {
+				document
+					.getElementById('top1')
+					?.removeEventListener('click', chooseTopHandler)
+				document
+					.getElementById('bottom1')
+					?.removeEventListener('click', chooseBottomHandler)
+				document
+					.getElementById('fire1')
+					?.removeEventListener('click', chooseMobileHandler)
+				document
+					.getElementById('top2')
+					?.removeEventListener('click', chooseTopHandler)
+				document
+					.getElementById('bottom2')
+					?.removeEventListener('click', chooseBottomHandler)
+				document
+					.getElementById('fire2')
+					?.removeEventListener('click', chooseMobileHandler)
+				document
+					.getElementById('right1')
+					?.removeEventListener('click', chooseRightHandler)
+				document
+					.getElementById('left1')
+					?.removeEventListener('click', chooseLeftHandler)
+				document
+					.getElementById('right2')
+					?.removeEventListener('click', chooseRightHandler)
+				document
+					.getElementById('left2')
+					?.removeEventListener('click', chooseLeftHandler)
+					document
+						.getElementById('space')
+						?.removeEventListener('click', chooseSpaceHandler)
+			} else {
+				document.removeEventListener('keypress', chooseHandlerListener)
+			}
 		}
 	}, [
 		x,
@@ -143,6 +244,7 @@ export const Editor = (props: EditorProps) => {
 		isDoneSelected,
 		setDoneSelected,
 		close,
+		isMobile,
 	])
 
 	const pixel = usePixel()
@@ -169,7 +271,7 @@ export const Editor = (props: EditorProps) => {
 						position: 'absolute',
 						width: `${8 * pixel}px`,
 						height: `${8 * pixel}px`,
-						outline: `3px solid ${
+						outline: `2px solid ${
 							(x > 10 && x < 15 && y >= 0 && y < 3) ||
 							(x > 7 && x < 10 && y >= 0 && y < 2) ||
 							(x > 15 && x < 18 && y >= 0 && y < 2) ||

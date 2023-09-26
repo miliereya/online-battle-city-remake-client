@@ -9,6 +9,7 @@ import { tank_p1__lvl_0 } from '../render/p1/tank-lvl_0'
 import RenderObject from './render'
 import { useGame } from '../game/provider'
 import { LevelChangeAnimation } from './animations/level-change'
+import { useMobile } from '../hooks/useMobile'
 
 const calculatePlayerYCoordinates = (choose: number) => {
 	switch (choose) {
@@ -71,6 +72,8 @@ export const Menu = () => {
 	>('main')
 	const [isEditorMode, setEditorMode] = useState(false)
 
+	const isMobile = useMobile()
+
 	useEffect(() => {
 		if (isEditorMode || game) return
 		const settings = {
@@ -79,8 +82,8 @@ export const Menu = () => {
 			friendlyFire: isFriendlyFire,
 			soundPack,
 		}
-		const chooseHandler = (e: KeyboardEvent) => {
-			let code = e.code
+		const chooseHandler = (code: string) => {
+			code
 			let isSettingChanged = false
 			let range = 5
 			if (
@@ -306,9 +309,68 @@ export const Menu = () => {
 				new Audio(`/audio/${soundPack}/shoot.ogg`).play()
 			}
 		}
-		document.addEventListener('keypress', chooseHandler)
+
+		const chooseHandlerListener = (e: KeyboardEvent) => {
+			chooseHandler(e.code)
+		}
+
+		const chooseTopHandler = () => {
+			chooseHandler('KeyW')
+		}
+
+		const chooseBottomHandler = () => {
+			chooseHandler('KeyS')
+		}
+
+		const chooseMobileHandler = () => {
+			chooseHandler('Space')
+		}
+
+		if (isMobile) {
+			document
+				.getElementById('fire1')
+				?.addEventListener('click', chooseMobileHandler)
+			document
+				.getElementById('top1')
+				?.addEventListener('click', chooseTopHandler)
+			document
+				.getElementById('bottom1')
+				?.addEventListener('click', chooseBottomHandler)
+			document
+				.getElementById('fire2')
+				?.addEventListener('click', chooseMobileHandler)
+			document
+				.getElementById('top2')
+				?.addEventListener('click', chooseTopHandler)
+			document
+				.getElementById('bottom2')
+				?.addEventListener('click', chooseBottomHandler)
+		} else {
+			document.addEventListener('keypress', chooseHandlerListener)
+		}
 		return () => {
-			document.removeEventListener('keypress', chooseHandler)
+			if (isMobile) {
+				document
+					.getElementById('top1')
+					?.removeEventListener('click', chooseTopHandler)
+				document
+					.getElementById('bottom1')
+					?.removeEventListener('click', chooseBottomHandler)
+				document
+					.getElementById('fire1')
+					?.removeEventListener('click', chooseMobileHandler)
+				document
+					.getElementById('top2')
+					?.removeEventListener('click', chooseTopHandler)
+				document
+					.getElementById('bottom2')
+					?.removeEventListener('click', chooseBottomHandler)
+				document
+					.getElementById('fire2')
+					?.removeEventListener('click', chooseMobileHandler)
+			} else {
+				document.removeEventListener('keypress', chooseHandlerListener)
+			}
 		}
 	}, [
 		choose,
@@ -334,6 +396,7 @@ export const Menu = () => {
 		deleteLobby,
 		lobby,
 		soundPack,
+		isMobile,
 	])
 
 	const setLobbyNameHandler = (val: string) => {
@@ -473,18 +536,22 @@ export const Menu = () => {
 					)}
 				</div>
 
-				<div className={s.p1_buttons}>
-					<p className={s.buttons_text}>P1</p>
-					<p className={s.buttons_text}>W A S D - MOVE</p>
-					<p className={s.buttons_text}>F - FIRE</p>
-					<p className={s.buttons_text}>SPACE - PAUSE</p>
-				</div>
-				<div className={s.p2_buttons}>
-					<p className={s.buttons_text}>P2</p>
-					<p className={s.buttons_text}>I J K L - MOVE</p>
-					<p className={s.buttons_text}>; - FIRE</p>
-					<p className={s.buttons_text}>SPACE - PAUSE</p>
-				</div>
+				{!isMobile && (
+					<>
+						<div className={s.p1_buttons}>
+							<p className={s.buttons_text}>P1</p>
+							<p className={s.buttons_text}>W A S D - MOVE</p>
+							<p className={s.buttons_text}>F - FIRE</p>
+							<p className={s.buttons_text}>SPACE - PAUSE</p>
+						</div>
+						<div className={s.p2_buttons}>
+							<p className={s.buttons_text}>P2</p>
+							<p className={s.buttons_text}>I J K L - MOVE</p>
+							<p className={s.buttons_text}>; - FIRE</p>
+							<p className={s.buttons_text}>SPACE - PAUSE</p>
+						</div>
+					</>
+				)}
 			</div>
 			<div
 				style={{

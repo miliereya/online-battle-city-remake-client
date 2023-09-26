@@ -87,7 +87,60 @@
 	z-index: 2;
 	font-family: 'Battle City';
 	top: 50%;
-	margin-left: 850px;
+	margin-left: 950px;
+}
+
+.control_wrapper {
+	z-index: 9999;
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.control_wrapper_2 {
+	z-index: 9999;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.pause_wrapper {
+	z-index: 9999;
+	position: fixed;
+	left: 50%;
+	margin-left: -25px;
+	bottom: 10px;
+}
+
+.control_top_wrapper {
+	display: flex;
+	justify-content: center;
+	gap: 5px;
+}
+
+.control_button {
+	-webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* IE 10 and IE 11 */
+	user-select: none; /* Standard syntax */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid gray;
+	padding: 10px;
+	font-size: 25px;
+	background: none;
+	color: #fff;
+	opacity: 0.65;
+	width: 50px;
+	height: 50px;
+	border-radius: 5px;
+	grid-area: btn;
 }
 
 @media (max-width: 1090px) or (max-height: 980px) {
@@ -139,8 +192,10 @@
 			gap: 2px;
 		}
 	}
+	.done_text {
+		margin-left: 840px;
+	}
 }
-
 
 @media (max-width: 950px) or (max-height: 870px) {
 	.pixel {
@@ -190,6 +245,10 @@
 			display: flex;
 			gap: 2px;
 		}
+	}
+	.done_text {
+		margin-left: 736px;
+		font-size: 14px;
 	}
 }
 
@@ -242,6 +301,10 @@
 			gap: 2px;
 		}
 	}
+	.done_text {
+		margin-left: 636px;
+		font-size: 13px;
+	}
 }
 
 @media (max-width: 750px) or (max-height: 660px) {
@@ -292,6 +355,10 @@
 			display: flex;
 			gap: 2px;
 		}
+	}
+	.done_text {
+		margin-left: 526px;
+		font-size: 10px;
 	}
 }
 
@@ -344,6 +411,10 @@
 			gap: 2px;
 		}
 	}
+	.done_text {
+		margin-left: 424px;
+		font-size: 9px;
+	}
 }
 
 @media (max-width: 500px) or (max-height: 460px) {
@@ -395,6 +466,10 @@
 			gap: 2px;
 		}
 	}
+	.done_text {
+		margin-left: 314px;
+		font-size: 6px;
+	}
 }
 
 @media (max-width: 360px) or (max-height: 340px) {
@@ -445,5 +520,9 @@
 			display: flex;
 			gap: 2px;
 		}
+	}
+	.done_text {
+		margin-left: 212px;
+		font-size: 4px;
 	}
 }
