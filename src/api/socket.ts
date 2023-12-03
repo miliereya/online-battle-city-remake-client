@@ -1,44 +1,28 @@
 import { io } from 'socket.io-client'
-import { GameActions, LobbyActions, TypeServer } from './socket.types'
+import { GameActions, LobbyActions } from './socket.types'
 import { ILobby } from '@/battle-city/types/lobby.types'
 import { Dispatch, SetStateAction } from 'react'
-import { CreateGameObject, IGame } from '@/battle-city/types/game.types'
 import { GameSettings } from '@/battle-city/game/provider'
-import { EditorObject } from '@/battle-city/game/types'
-import { Game } from '@/battle-city/game/init'
+import { EditorObject } from '@/battle-city/types'
+import { Game } from '@/battle-city/instances'
 
-const socketUSA = io(process.env.NEXT_PUBLIC_SERVER_USA ?? '', {
+const socket = io(process.env.NEXT_PUBLIC_SERVER_USA ?? '', {
 	withCredentials: true,
 })
-
-const socketEUR = io(process.env.NEXT_PUBLIC_SERVER_EUR ?? '', {
-	withCredentials: true,
-})
-
-const socketRUS = io(process.env.NEXT_PUBLIC_SERVER_RUS ?? '', {
-	withCredentials: true,
-})
-
-function getCurrentSocket(server: TypeServer) {
-	return server === 'USA' ? socketUSA : server === 'EUR' ? socketEUR : socketRUS
-}
 
 export const lobbyActions = {
-	ping(server: TypeServer, setPing: Dispatch<SetStateAction<number>>) {
-		const socket = getCurrentSocket(server)
+	ping(setPing: Dispatch<SetStateAction<number>>) {
 		socket.emit(LobbyActions.ping, undefined, (resTime: number) => {
 			setPing(new Date().getTime() - resTime)
 		})
 	},
 	create(
-		server: TypeServer,
 		name: string,
 		setLobby: any,
 		setGame: Dispatch<SetStateAction<Game | undefined>>,
 		settings: GameSettings,
 		editor?: EditorObject[]
 	) {
-		const socket = getCurrentSocket(server)
 		socket.on(GameActions.frame, ({ game }: { game: Game }) => {
 			if (game.isEnded) {
 				socket.off(GameActions.frame)
@@ -56,12 +40,7 @@ export const lobbyActions = {
 		)
 	},
 
-	joinLobby(
-		server: TypeServer,
-		name: string,
-		setGame: Dispatch<SetStateAction<Game | undefined>>
-	) {
-		const socket = getCurrentSocket(server)
+	joinLobby(name: string, setGame: Dispatch<SetStateAction<Game | undefined>>) {
 		socket.emit(LobbyActions.join, name)
 		socket.on(GameActions.frame, ({ game }: { game: Game }) => {
 			if (game.isEnded) {
@@ -71,14 +50,12 @@ export const lobbyActions = {
 		})
 	},
 
-	delete(server: TypeServer, name: string) {
-		const socket = getCurrentSocket(server)
+	delete(name: string) {
 		socket.emit(LobbyActions.delete, name)
 		socket.off(GameActions.frame)
 	},
 
-	input(server: TypeServer, button: string, gameId: string) {
-		const socket = getCurrentSocket(server)
+	input(button: string, gameId: string) {
 		socket.emit(GameActions.input, { button, gameId })
 	},
 }

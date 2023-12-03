@@ -1,28 +1,18 @@
 'use client'
-import s from '../components/game.module.scss'
+import s from './game.module.scss'
 
 import {
 	createContext,
-	Dispatch,
 	FC,
 	ReactNode,
-	SetStateAction,
 	useCallback,
 	useContext,
 	useEffect,
 	useState,
 } from 'react'
-import {
-	EditorObject,
-	GameActions,
-	GameManager,
-	Lobby,
-	TypeButton,
-	TypeDirection,
-} from './types'
-import { InputDto } from './dto'
-import { Settings } from './settings'
-import { Game } from './init'
+import { EditorObject, TypeButton, TypeDirection } from '../types'
+import { Settings } from '../settings'
+import { Game } from '../instances'
 import {
 	animationsFrameLogic,
 	bonusesFrameLogic,
@@ -32,13 +22,15 @@ import {
 	gameStatusFrameLogic,
 	levelFrameLogic,
 	playersFrameLogic,
-} from './logics'
+} from '../logics'
 import { lobbyActions } from '@/api/socket'
-import { ILobby } from '../types/lobby.types'
-import { CreateGameObject, TypeMoveButton } from '../types/game.types'
-import { useFrameLoop } from '@/hooks/useFrameLoop'
-import { TypeServer } from '@/api/socket.types'
-import { isMobile } from 'react-device-detect'
+import { ILobby } from '@/battle-city/types/lobby.types'
+import {
+	CreateGameObject,
+	TypeMoveButton,
+} from '@/battle-city/types/game.types'
+import { useFrameLoop } from '@/battle-city/hooks/useFrameLoop'
+import { useMobile } from '../hooks'
 
 export interface GameSettings {
 	hardcore: boolean
@@ -64,8 +56,6 @@ interface GameContextInterface {
 		editor?: CreateGameObject[]
 	) => void
 	joinLobby: (name: string) => void
-	server: TypeServer
-	setServer: Dispatch<SetStateAction<TypeServer>>
 	ping: number
 	checkPing: () => void
 	deleteLobby: (name: string) => void
@@ -84,8 +74,6 @@ export const GameContext = createContext<GameContextInterface>({
 		editor?: CreateGameObject[]
 	) => {},
 	joinLobby() {},
-	server: 'USA',
-	setServer() {},
 	ping: 0,
 	checkPing() {},
 	deleteLobby(name: string) {},
@@ -96,10 +84,10 @@ interface GameProviderProps {
 }
 
 const GameProvider: FC<GameProviderProps> = ({ children }) => {
+	const isMobile = useMobile()
 	const [game, setGame] = useState<Game>()
 	const [lobby, setLobby] = useState<ILobby>()
 	const [lobbies, setLobbies] = useState<ILobby[]>([])
-	const [server, setServer] = useState<TypeServer>('USA')
 	const [ping, setPing] = useState(0)
 
 	// let timer: any
@@ -128,19 +116,19 @@ const GameProvider: FC<GameProviderProps> = ({ children }) => {
 		settings: GameSettings,
 		editor?: CreateGameObject[]
 	) => {
-		lobbyActions.create(server, name, setLobby, setGame, settings, editor)
+		lobbyActions.create(name, setLobby, setGame, settings, editor)
 	}
 
 	const joinLobby = (name: string) => {
-		lobbyActions.joinLobby(server, name, setGame)
+		lobbyActions.joinLobby(name, setGame)
 	}
 
 	const checkPing = () => {
-		lobbyActions.ping(server, setPing)
+		lobbyActions.ping(setPing)
 	}
 
 	const deleteLobby = (name: string) => {
-		lobbyActions.delete(server, name)
+		lobbyActions.delete(name)
 	}
 
 	const joinLobbyHandler = (id: string) => {
@@ -160,7 +148,7 @@ const GameProvider: FC<GameProviderProps> = ({ children }) => {
 		}
 		gameInterval = setInterval(
 			() => frameGame(game, clearGameInterval),
-			Settings.frameRate
+			22
 		)
 		setTimeout(() => {
 			game.isEnded = true
@@ -227,7 +215,7 @@ const GameProvider: FC<GameProviderProps> = ({ children }) => {
 	const callbackForGameLoop = useCallback(() => {
 		if (!movement || !game?.id) return
 		// how frequently we should input new values to sockets  (возможно нужно еще какой-то транзишен добавить, 16 это дефолт, слишком быстро, но с 30 мне кажется что недостаточно плавно)
-		lobbyActions.input(server, movement, game.id)
+		lobbyActions.input(movement, game.id)
 	}, [game?.id, movement])
 
 	useFrameLoop(callbackForGameLoop)
@@ -258,12 +246,12 @@ const GameProvider: FC<GameProviderProps> = ({ children }) => {
 
 		const fireOnlineHandler = (e: KeyboardEvent) => {
 			if (game && e.code === 'KeyF') {
-				lobbyActions.input(server, 'FIRE', game.id)
+				lobbyActions.input('FIRE', game.id)
 			}
 		}
 		const pauseOnlineHandler = (e: KeyboardEvent) => {
 			if (game && e.code === 'Space') {
-				lobbyActions.input(server, 'PAUSE', game.id)
+				lobbyActions.input('PAUSE', game.id)
 			}
 		}
 
@@ -302,8 +290,6 @@ const GameProvider: FC<GameProviderProps> = ({ children }) => {
 				inputHandler2,
 				createLobbyHandler,
 				joinLobby,
-				server,
-				setServer,
 				ping,
 				checkPing,
 				deleteLobby,

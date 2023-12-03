@@ -1,7 +1,7 @@
 'use client'
 
+import { getKeys } from '@/battle-city/utils/object.utils'
 import { GameSettings } from '../game/provider'
-import { getKeys } from '../utils/object.utils'
 
 export const useAudio = <T>(sounds: T, settings: GameSettings | undefined) => {
 	if (!sounds || !settings) return
@@ -14,7 +14,9 @@ export const useAudio = <T>(sounds: T, settings: GameSettings | undefined) => {
 				titles[i] !== 'enemy_move' &&
 				typeof Audio !== undefined
 			)
-				new Audio(`/audio/${settings.soundPack}/${String(titles[i])}.ogg`).play()
+				new Audio(
+					`/audio/${settings.soundPack}/${String(titles[i])}.ogg`
+				).play()
 		}
 	}
 }

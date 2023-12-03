@@ -1,3 +1,5 @@
+import { Coordinates } from "."
+
 export type TypeMoveButton = 'TOP' | 'BOTTOM' | 'LEFT' | 'RIGHT'
 export type TypeActionButton = 'FIRE' | 'PAUSE'
 
@@ -14,11 +16,6 @@ export type TypeGameObjet = 'STONE' | 'BRICK' | 'WATER' | 'TREES' | 'ICE'
 export interface GameObject extends Coordinates {
 	id: string
 	type: TypeGameObjet
-}
-
-export interface Coordinates {
-	coordinateX: number
-	coordinateY: number
 }
 
 export type TypeEnemyTank = 'NORMAL' | 'SPEEDY' | 'HEAVY'

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 export const useMobile = () => {
 	const [width, setWidth] = useState(
-		typeof window !== 'undefined' ? window.innerWidth : 0
+		1000
 	)
 	const handleWindowSizeChange = () => {
 		setWidth(window.innerWidth)
@@ -11,6 +11,7 @@ export const useMobile = () => {
 
 	useEffect(() => {
 		window.addEventListener('resize', handleWindowSizeChange)
+		setWidth(window.innerWidth)
 		return () => {
 			window.removeEventListener('resize', handleWindowSizeChange)
 		}

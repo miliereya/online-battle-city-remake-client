@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Pixel } from '../types/render.types'
+import { Pixel } from '../types'
 
 export const usePixel = () => {
 	const [pixel, setPixel] = useState<Pixel>(4)

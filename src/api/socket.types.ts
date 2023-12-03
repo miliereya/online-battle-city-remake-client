@@ -10,5 +10,3 @@ export enum GameActions {
 	input = 'game/input',
 	ended = 'game/ended',
 }
-
-export type TypeServer = 'USA' | 'EUR' | 'RUS'

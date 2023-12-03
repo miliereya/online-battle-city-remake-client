@@ -1,6 +1,7 @@
 'use client'
 
-import { BattleCity } from '@/battle-city/components/battle-city'
+import { BattleCity } from "@/battle-city"
+
 
 export default function Home() {
 	return (

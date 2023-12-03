@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { GameSettings } from '../game/provider'
 
 type PrevSound = null | 'player' | 'enemy'
@@ -20,13 +20,17 @@ export const useMoveAudio = (
 		playerMoveSound.current = new Audio(
 			`/audio/${settings.soundPack}/player_move.ogg`
 		)
+		playerMoveSound.current.volume = 0.15
 		enemyMoveSound.current = new Audio(
 			`/audio/${settings.soundPack}/enemy_move.ogg`
 		)
+		enemyMoveSound.current.volume = 0.15
 		marioThemeSound.current = new Audio(`/audio/mario/theme.ogg`)
-	}, [settings])
+		marioThemeSound.current.volume = 0.25
+	}, [])
 
 	useEffect(() => {
+		console.log(soundPrev)
 		if (soundPrev === 'player') {
 			if (settings?.soundPack === 'mario') {
 				marioThemeSound.current?.play()
