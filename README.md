@@ -4,6 +4,8 @@ I was simply playing around with Websockets and somehow created this
 
 Deployed - https://battle-city-remake.online
 
+Server - https://github.com/miliereya/online-battle-city-remake-server
+
 > :warning: **This project was just a playground, so there's a lot of stuf to refactor**
 
 ## Features
